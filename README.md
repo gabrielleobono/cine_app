@@ -49,7 +49,7 @@ Séparation stricte UI / données : aucun widget ne contient de donnée écrite 
 ### Installation
 
 ```bash
-git clone https://github.com/TON_PSEUDO/cine_list_app.git
+git clone https://github.com/gabrielleobono/cine_list_app.git
 cd cine_list_app
 flutter pub get
 ```
