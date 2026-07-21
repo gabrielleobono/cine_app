@@ -42,3 +42,84 @@ flutter test
 - **Test de widget** (`test/widget_test.dart`) : vérifie que l'écran liste affiche bien le titre, la barre de recherche et les films
 
 ## 🧱 Architecture
+
+
+lib/
+├── main.dart # Point d'entrée, configuration du thème
+├── models/ # Classes de données pures
+│ ├── movie.dart
+│ └── review.dart
+├── data/ # Source des données (mock, séparée de l'UI)
+│ ├── movie_repository.dart
+│ └── review_repository.dart
+├── providers/ # Gestion d'état partagé
+│ └── theme_provider.dart
+├── router/ # Configuration GoRouter (routes nommées)
+│ └── app_router.dart
+├── screens/ # Un écran par fichier
+│ ├── home_screen.dart
+│ ├── movie_detail_screen.dart
+│ ├── add_review_screen.dart
+│ └── settings_screen.dart
+└── widgets/ # 3 composants réutilisables
+├── movie_card.dart # Carte film (mode liste et grille)
+├── rating_stars.dart # Affichage de note en étoiles
+└── genre_filter_bar.dart # Barre de recherche + filtres genre
+
+Séparation stricte UI / données : aucun widget n'affiche de donnée écrite en dur, tout provient des dépôts du dossier `data/`.
+
+## 🛣️ Navigation (GoRouter)
+
+| Route | Nom | Description |
+|---|---|---|
+| `/` | `home` | Liste des films avec recherche et filtres |
+| `/movie/:id` | `movieDetail` | Détail d'un film (paramètre `id` dans l'URL) |
+| `/movie/:id/review` | `addReview` | Formulaire d'ajout d'avis pour ce film |
+| `/settings` | `settings` | Réglages, dont le thème clair/sombre |
+
+## 🚀 Lancement du projet
+
+### Prérequis
+- Flutter SDK installé ([guide officiel](https://docs.flutter.dev/get-started/install))
+- Un émulateur, un navigateur, ou un appareil physique connecté
+
+### Installation
+
+```bash
+git clone https://github.com/gabrielleobono/cine_app.git
+cd cine_app
+flutter pub get
+```
+
+### Lancer l'application
+
+```bash
+flutter run
+```
+
+```bash
+flutter devices        # liste les appareils disponibles
+flutter run -d <id>    # lance sur un appareil précis
+```
+
+### Lancer les tests
+
+```bash
+flutter test
+```
+
+### Analyser la qualité du code
+
+```bash
+flutter analyze
+```
+
+## 🛠️ Technologies
+
+- **Flutter** / Dart
+- **go_router** — navigation déclarative avec routes nommées
+- **provider** — gestion d'état (thème)
+
+## 📄 Licence
+
+Projet réalisé à des fins pédagogiques.
