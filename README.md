@@ -15,13 +15,13 @@ Application Flutter multi-écrans de découverte de films, réalisée dans le ca
 - **Écran Détail** : accessible via une route GoRouter paramétrée (`/movie/:id`), affiche toutes les infos du film
 - **Écran Formulaire** : ajout d'un avis (nom, note, commentaire), avec validation de chaque champ (voir section dédiée)
 - **Écran Réglages** : bascule thème clair/sombre appliquée à toute l'app via `provider`
-- **Responsive** : bascule automatique liste ↔ grille selon la largeur d'écran (seuil 600px, standard Material Design pour mobile/tablette)
+- **Responsive** : bascule automatique liste ↔ Grille multi-paliers adaptative selon la largeur d'écran (téléphone, tablette, PC) 
 
 ## 🧩 Diversité des widgets utilisés
 
 Le projet utilise plus de 8 widgets Flutter différents, notamment :
 
-`ListView`, `GridView` (via `SliverGrid`), `Card`, `TextField`, `TextFormField`, `DropdownButtonFormField`, `ChoiceChip`, `SwitchListTile`, `SliverAppBar`, `Form`, `InkWell`, `Row`/`Column`.
+`SliverList `, `GridView` (via `SliverGrid`), `Card`, `TextField`, `TextFormField`, `DropdownButtonFormField`, `ChoiceChip`, `SwitchListTile`, `SliverAppBar`, `Form`, `InkWell`, `Row`/`Column`.
 
 ## ✅ Validation du formulaire d'avis
 
@@ -119,6 +119,11 @@ flutter analyze
 - **Flutter** / Dart
 - **go_router** — navigation déclarative avec routes nommées
 - **provider** — gestion d'état (thème)
+
+**Bonnes pratiques**
+Protection contre le double-clic (anti-spam) lors de la soumission d'un avis.
+Fermeture automatique du clavier virtuel au clic hors des champs.
+Vérification du cycle de vie des widgets (mounted) avant l'affichage des messages pour éviter les crashs de contexte.
 
 ## 📄 Licence
 
