@@ -1,17 +1,49 @@
 # 🎬 CinéScope
 
-Application Flutter multi-écrans de découverte de films, réalisée dans le cadre d'une certification Flutter. Le projet met en pratique la navigation avec GoRouter, la gestion d'état, les formulaires validés, le thème clair/sombre et la conception de widgets réutilisables.
+Application Flutter multi-écrans de découverte de films, réalisée dans le cadre d'une certification Flutter. Le projet met en pratique la navigation avec GoRouter, la gestion d'état, les formulaires validés, le thème clair/sombre, le responsive et la conception de widgets réutilisables.
 
-##  Fonctionnalités
+## 📱 Captures d'écran
 
-- **Écran Liste** : parcours de tous les films, recherche par titre/réalisateur en temps réel, filtrage par genre via des chips
-- **Écran Détail** : affichage complet d'un film (affiche, réalisateur, durée, note, synopsis), accessible via une route GoRouter paramétrée (`/movie/:id`)
-- **Écran Formulaire** : ajout d'un avis sur un film (nom, note, commentaire) avec validation de chaque champ
-- **Écran Réglages** : bascule entre thème clair et thème sombre, appliquée à toute l'application
-- **Responsive** : bascule automatique entre affichage en liste (mobile) et en grille 3 colonnes (tablette, largeur > 600px)
-- **Barre d'application rétractable** (SliverAppBar) au scroll
+| Liste (clair) | Détail | Formulaire | Réglages (sombre) |
+|---|---|---|---|
+| ![Liste](Screenshot_20260720-164306.png) | ![Détail](screenschots/Screenshot_20260720-164317.png) | ![Formulaire](screenschots/Screenshot_20260720-164332.png) | ![Réglages](screenschots/Screenshot_20260720-164343.png) |
 
-##  Architecture
+
+## ✨ Fonctionnalités
+
+- **Écran Liste** : recherche en temps réel (titre/réalisateur) et filtrage par genre via des `ChoiceChip`
+- **Écran Détail** : accessible via une route GoRouter paramétrée (`/movie/:id`), affiche toutes les infos du film
+- **Écran Formulaire** : ajout d'un avis (nom, note, commentaire), avec validation de chaque champ (voir section dédiée)
+- **Écran Réglages** : bascule thème clair/sombre appliquée à toute l'app via `provider`
+- **Responsive** : bascule automatique liste ↔ grille selon la largeur d'écran (seuil 600px, standard Material Design pour mobile/tablette)
+
+## 🧩 Diversité des widgets utilisés
+
+Le projet utilise plus de 8 widgets Flutter différents, notamment :
+
+`ListView`, `GridView` (via `SliverGrid`), `Card`, `TextField`, `TextFormField`, `DropdownButtonFormField`, `ChoiceChip`, `SwitchListTile`, `SliverAppBar`, `Form`, `InkWell`, `Row`/`Column`.
+
+## ✅ Validation du formulaire d'avis
+
+Chaque champ du formulaire (`add_review_screen.dart`) est validé individuellement via `FormState.validate()` :
+- **Nom** : minimum 2 caractères, texte non vide après suppression des espaces
+- **Note** : sélection obligatoire dans le menu déroulant (1 à 5)
+- **Commentaire** : minimum 10 caractères, pour éviter les avis vides ou trop courts
+
+La soumission est bloquée tant que `_formKey.currentState!.validate()` ne renvoie pas `true`.
+
+## 🧪 Tests
+
+```bash
+flutter test
+```
+
+- **Test unitaire** (`test/movie_repository_test.dart`) : vérifie la logique de recherche/filtrage (par texte, par genre, combinaison des deux, cas vide)
+- **Test de widget** (`test/widget_test.dart`) : vérifie que l'écran liste affiche bien le titre, la barre de recherche et les films
+
+## 🧱 Architecture
+
+
 lib/
 ├── main.dart # Point d'entrée, configuration du thème
 ├── models/ # Classes de données pures
@@ -24,19 +56,19 @@ lib/
 │ └── theme_provider.dart
 ├── router/ # Configuration GoRouter (routes nommées)
 │ └── app_router.dart
-├── screens/ # Un fichier par écran
+├── screens/ # Un écran par fichier
 │ ├── home_screen.dart
 │ ├── movie_detail_screen.dart
 │ ├── add_review_screen.dart
 │ └── settings_screen.dart
-└── widgets/ # Composants réutilisables
-├── movie_card.dart
-├── rating_stars.dart
-└── genre_filter_bar.dart
+└── widgets/ # 3 composants réutilisables
+├── movie_card.dart # Carte film (mode liste et grille)
+├── rating_stars.dart # Affichage de note en étoiles
+└── genre_filter_bar.dart # Barre de recherche + filtres genre
 
-Séparation stricte UI / données : aucun widget ne contient de donnée écrite en dur, tout provient des dépôts du dossier `data/`.
+Séparation stricte UI / données : aucun widget n'affiche de donnée écrite en dur, tout provient des dépôts du dossier `data/`.
 
-## Navigation (GoRouter)
+## 🛣️ Navigation (GoRouter)
 
 | Route | Nom | Description |
 |---|---|---|
@@ -45,33 +77,49 @@ Séparation stricte UI / données : aucun widget ne contient de donnée écrite 
 | `/movie/:id/review` | `addReview` | Formulaire d'ajout d'avis pour ce film |
 | `/settings` | `settings` | Réglages, dont le thème clair/sombre |
 
+## 🚀 Lancement du projet
+
+### Prérequis
+- Flutter SDK installé ([guide officiel](https://docs.flutter.dev/get-started/install))
+- Un émulateur, un navigateur, ou un appareil physique connecté
 
 ### Installation
 
 ```bash
-git clone https://github.com/gabrielleobono/cine_list_app.git
-cd cine_list_app
+git clone https://github.com/gabrielleobono/cine_app.git
+cd cine_app
 flutter pub get
 ```
 
 ### Lancer l'application
 
-bash
+```bash
 flutter run
+```
 
-Flutter détecte automatiquement les appareils disponibles. Pour cibler un appareil précis :
-bash
+```bash
 flutter devices        # liste les appareils disponibles
-flutter run -d <id>    # lance sur l'appareil choisi
+flutter run -d <id>    # lance sur un appareil précis
+```
 
+### Lancer les tests
 
+```bash
+flutter test
+```
 
-##  Technologies
+### Analyser la qualité du code
+
+```bash
+flutter analyze
+```
+
+## 🛠️ Technologies
 
 - **Flutter** / Dart
 - **go_router** — navigation déclarative avec routes nommées
 - **provider** — gestion d'état (thème)
 
-##  Licence
+## 📄 Licence
 
 Projet réalisé à des fins pédagogiques.
