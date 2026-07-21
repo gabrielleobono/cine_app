@@ -1,30 +1,34 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-import 'package:cine_app/main.dart';
+import 'package:cine_app/data/movie_repository.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  group('MovieRepository.search', () {
+    final repo = MovieRepository.instance;
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    test('renvoie tous les films quand query et genre sont vides', () {
+      final results = repo.search();
+      expect(results.length, repo.getAll().length);
+    });
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+    test('filtre par titre, insensible à la casse', () {
+      final results = repo.search(query: 'blade');
+      expect(results.length, 1);
+      expect(results.first.title, contains('Blade Runner'));
+    });
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    test('filtre par genre', () {
+      final results = repo.search(genre: 'Science-Fiction');
+      expect(results.every((m) => m.genre == 'Science-Fiction'), true);
+    });
+
+    test('combine texte et genre en même temps', () {
+      final results = repo.search(query: 'dune', genre: 'Science-Fiction');
+      expect(results.length, 1);
+    });
+
+    test('renvoie une liste vide si rien ne correspond', () {
+      final results = repo.search(query: 'film qui n\'existe pas');
+      expect(results, isEmpty);
+    });
   });
 }

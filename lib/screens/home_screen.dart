@@ -3,6 +3,7 @@ import '../data/movie_repository.dart';
 import '../models/movie.dart';
 import 'package:go_router/go_router.dart';
 import '../widgets/movie_card.dart';
+import '../widgets/genre_filter_bar.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -42,36 +43,11 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
           SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.all(12),
-              child: TextField(
-                decoration: const InputDecoration(
-                  hintText: 'Rechercher un film...',
-                  prefixIcon: Icon(Icons.search),
-                  border: OutlineInputBorder(),
-                ),
-                onChanged: (value) => setState(() => _query = value),
-              ),
-            ),
-          ),
-          SliverToBoxAdapter(
-            child: SizedBox(
-              height: 40,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                padding: const EdgeInsets.symmetric(horizontal: 12),
-                children: genres.map((g) {
-                  final selected = g == _selectedGenre;
-                  return Padding(
-                    padding: const EdgeInsets.only(right: 8),
-                    child: ChoiceChip(
-                      label: Text(g),
-                      selected: selected,
-                      onSelected: (_) => setState(() => _selectedGenre = g),
-                    ),
-                  );
-                }).toList(),
-              ),
+            child: GenreFilterBar(
+              genres: genres,
+              selectedGenre: _selectedGenre,
+              onQueryChanged: (value) => setState(() => _query = value),
+              onGenreSelected: (g) => setState(() => _selectedGenre = g),
             ),
           ),
           const SliverToBoxAdapter(child: SizedBox(height: 8)),
