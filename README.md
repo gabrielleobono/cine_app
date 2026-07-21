@@ -120,6 +120,11 @@ flutter analyze
 - **go_router** — navigation déclarative avec routes nommées
 - **provider** — gestion d'état (thème)
 
+**Bonnes pratiques**
+Protection contre le double-clic (anti-spam) lors de la soumission d'un avis.
+Fermeture automatique du clavier virtuel au clic hors des champs.
+Vérification du cycle de vie des widgets (mounted) avant l'affichage des messages pour éviter les crashs de contexte.
+
 ## 📄 Licence
 
 Projet réalisé à des fins pédagogiques.
