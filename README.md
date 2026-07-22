@@ -6,7 +6,7 @@ Application Flutter multi-écrans de découverte de films, réalisée dans le ca
 
 | Liste (clair) | Détail | Formulaire | Réglages (sombre) |
 |---|---|---|---|
-| ![Liste](Screenshot_20260720-164306.png) | ![Détail](screenschots/Screenshot_20260720-164317.png) | ![Formulaire](screenschots/Screenshot_20260720-164332.png) | ![Réglages](screenschots/Screenshot_20260720-164343.png) |
+| ![Liste](screenschots/Screenshot_20260720-164306.png) | ![Détail](screenschots/Screenshot_20260720-164317.png) | ![Formulaire](screenschots/Screenshot_20260720-164332.png) | ![Réglages](screenschots/Screenshot_20260720-164343.png) |
 
 
 ## ✨ Fonctionnalités
