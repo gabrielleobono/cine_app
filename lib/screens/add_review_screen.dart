@@ -110,7 +110,7 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
                   ),
                   const SizedBox(height: 16),
                   DropdownButtonFormField<int>(
-                    value:
+                    initialValue:
                         _selectedRating, // Corrigé : initialValue n'existe pas
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     decoration: const InputDecoration(
