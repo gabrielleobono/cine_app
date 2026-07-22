@@ -6,7 +6,7 @@ Application Flutter multi-écrans de découverte de films, réalisée dans le ca
 
 | Liste (clair) | Détail | Formulaire | Réglages (sombre) |
 |---|---|---|---|
-| ![Liste](Screenshot_20260720-164306.png) | ![Détail](screenschots/Screenshot_20260720-164317.png) | ![Formulaire](screenschots/Screenshot_20260720-164332.png) | ![Réglages](screenschots/Screenshot_20260720-164343.png) |
+| ![Liste](screenschots/Screenshot_20260720-164306.png) | ![Détail](screenschots/Screenshot_20260720-164317.png) | ![Formulaire](screenschots/Screenshot_20260720-164332.png) | ![Réglages](screenschots/Screenshot_20260720-164343.png) |
 
 
 ## ✨ Fonctionnalités
@@ -38,8 +38,11 @@ La soumission est bloquée tant que `_formKey.currentState!.validate()` ne renvo
 flutter test
 ```
 
-- **Test unitaire** (`test/movie_repository_test.dart`) : vérifie la logique de recherche/filtrage (par texte, par genre, combinaison des deux, cas vide)
-- **Test de widget** (`test/widget_test.dart`) : vérifie que l'écran liste affiche bien le titre, la barre de recherche et les films
+- **Test unitaire** (`test/movie_repository_test.dart`) : vérifie la logique de recherche/filtrage (par texte, par genre, combinaison des deux, cas vide).
+- **Tests de widgets & d'écrans** :
+  - `test/home_screen_test.dart` : vérifie que l'écran d'accueil charge et affiche le titre, la barre de recherche et les cartes de films.
+  - `test/movie_detail_screen_test.dart` : valide l'affichage des informations d'un film (titre, réalisateur, synopsis).
+
 
 ## 🧱 Architecture
 
