@@ -28,4 +28,19 @@ class Movie {
     final m = durationMinutes % 60;
     return '${h}h${m.toString().padLeft(2, '0')}';
   }
+
+  factory Movie.fromJson(Map<String, dynamic> json) {
+    return Movie(
+      id: json['id'] as String,
+      title: json['title'] as String,
+      genre: json['genre'] as String,
+      year: json['year'] as int,
+      rating: (json['rating'] as num).toDouble(),
+      durationMinutes: json['durationMinutes'] as int,
+      director: json['director'] as String,
+      synopsis: json['synopsis'] as String,
+      posterEmoji: json['posterEmoji'] as String,
+      colorValue: json['colorValue'] as int,
+    );
+  }
 }

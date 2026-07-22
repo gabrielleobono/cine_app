@@ -13,12 +13,11 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  // Calcule dynamiquement le nombre de colonnes selon la largeur disponible
   int _getCrossAxisCount(double width) {
-    if (width > 1200) return 5; // Grands écrans / PC de bureau
-    if (width > 900) return 4; // Tablettes en mode paysage
-    if (width > 600) return 3; // Petites tablettes / Grands téléphones paysage
-    return 2; // Téléphones standards (mode grille optimisé)
+    if (width > 1200) return 5;
+    if (width > 900) return 4;
+    if (width > 600) return 3;
+    return 2;
   }
 
   @override
@@ -27,81 +26,76 @@ class _HomeScreenState extends State<HomeScreen> {
     final results = movieProvider.results;
     final genres = movieProvider.genres;
 
-    final mediaQuery = MediaQuery.of(context);
-    final screenWidth = mediaQuery.size.width;
+    final screenWidth = MediaQuery.of(context).size.width;
     final isMobilePortrait = screenWidth <= 480;
 
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('CinéScope'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.settings),
+            onPressed: () => context.pushNamed('settings'),
+          ),
+        ],
+      ),
       body: SafeArea(
-        top: false,
-        child: CustomScrollView(
-          slivers: [
-            SliverAppBar(
-              title: const Text('CinéScope'),
-              floating: true,
-              snap: true,
-              actions: [
-                IconButton(
-                  icon: const Icon(Icons.settings),
-                  onPressed: () => context.pushNamed('settings'),
-                ),
-              ],
+        child: Column(
+          children: [
+            // Votre widget réutilisable pour filtrer
+            GenreFilterBar(
+              genres: genres,
+              selectedGenre: movieProvider.selectedGenre,
+              onQueryChanged: movieProvider.updateQuery,
+              onGenreSelected: movieProvider.updateGenre,
             ),
-            SliverToBoxAdapter(
-              child: GenreFilterBar(
-                genres: genres,
-                selectedGenre: movieProvider.selectedGenre,
-                onQueryChanged: movieProvider.updateQuery,
-                onGenreSelected: movieProvider.updateGenre,
-              ),
-            ),
-            const SliverToBoxAdapter(child: SizedBox(height: 8)),
+            const SizedBox(height: 8),
 
-            if (results.isEmpty)
-              const SliverFillRemaining(
-                hasScrollBody: false,
-                child: Center(child: Text('Aucun film trouvé.')),
-              )
-            else if (isMobilePortrait)
-              SliverList(
-                delegate: SliverChildBuilderDelegate((context, index) {
-                  final movie = results[index];
-                  return MovieCard(
-                    movie: movie,
-                    isGrid: false,
-                    onTap: () => context.pushNamed(
-                      'movieDetail',
-                      pathParameters: {'id': movie.id},
-                    ),
-                  );
-                }, childCount: results.length),
-              )
-            else
-              SliverPadding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 12,
-                  vertical: 8,
-                ),
-                sliver: SliverGrid(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: _getCrossAxisCount(screenWidth),
-                    mainAxisSpacing: 12,
-                    crossAxisSpacing: 12,
-                    childAspectRatio: screenWidth > 900 ? 0.7 : 0.75,
-                  ),
-                  delegate: SliverChildBuilderDelegate((context, index) {
-                    final movie = results[index];
-                    return MovieCard(
-                      movie: movie,
-                      isGrid: true,
-                      onTap: () => context.pushNamed(
-                        'movieDetail',
-                        pathParameters: {'id': movie.id},
+            // Contenu principal de la liste
+            Expanded(
+              child: results.isEmpty
+                  ? const Center(child: Text('Aucun film trouvé.'))
+                  : isMobilePortrait
+                  ? ListView.builder(
+                      // LISTVIEW
+                      itemCount: results.length,
+                      itemBuilder: (context, index) {
+                        final movie = results[index];
+                        return MovieCard(
+                          movie: movie,
+                          isGrid: false,
+                          onTap: () => context.pushNamed(
+                            'movieDetail',
+                            pathParameters: {'id': movie.id},
+                          ),
+                        );
+                      },
+                    )
+                  : Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 12),
+                      child: GridView.builder(
+                        // GRIDVIEW
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: _getCrossAxisCount(screenWidth),
+                          mainAxisSpacing: 12,
+                          crossAxisSpacing: 12,
+                          childAspectRatio: screenWidth > 900 ? 0.7 : 0.75,
+                        ),
+                        itemCount: results.length,
+                        itemBuilder: (context, index) {
+                          final movie = results[index];
+                          return MovieCard(
+                            movie: movie,
+                            isGrid: true,
+                            onTap: () => context.pushNamed(
+                              'movieDetail',
+                              pathParameters: {'id': movie.id},
+                            ),
+                          );
+                        },
                       ),
-                    );
-                  }, childCount: results.length),
-                ),
-              ),
+                    ),
+            ),
           ],
         ),
       ),

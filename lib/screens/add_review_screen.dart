@@ -91,6 +91,7 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
+                  // CHAMP 1
                   TextFormField(
                     controller: _nameController,
                     textInputAction: TextInputAction.next,
@@ -109,9 +110,9 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
                     },
                   ),
                   const SizedBox(height: 16),
+
                   DropdownButtonFormField<int>(
-                    initialValue:
-                        _selectedRating, // Corrigé : initialValue n'existe pas
+                    initialValue: _selectedRating,
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     decoration: const InputDecoration(
                       labelText: 'Note',
@@ -133,10 +134,11 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
                     },
                   ),
                   const SizedBox(height: 16),
+
                   TextFormField(
                     controller: _commentController,
                     maxLines: 4,
-                    maxLength: 500, // Empêche les textes trop lourds en base
+                    maxLength: 500,
                     textInputAction: TextInputAction.done,
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     decoration: const InputDecoration(
@@ -152,6 +154,7 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
                     },
                   ),
                   const SizedBox(height: 24),
+
                   ElevatedButton(
                     onPressed: _isSubmitting ? null : _submit,
                     child: Padding(

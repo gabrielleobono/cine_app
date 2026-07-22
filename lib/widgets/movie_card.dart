@@ -18,6 +18,7 @@ class MovieCard extends StatelessWidget {
   Widget build(BuildContext context) {
     if (isGrid) {
       return Card(
+        clipBehavior: Clip.antiAlias, // Assure des angles arrondis parfaits
         child: InkWell(
           onTap: onTap,
           child: Column(
@@ -38,10 +39,17 @@ class MovieCard extends StatelessWidget {
                   children: [
                     Text(
                       movie.title,
+                      maxLines: 1, // Évite la coupure ou la superposition
+                      overflow:
+                          TextOverflow.ellipsis, // Ajoute '...' si trop long
                       style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(height: 4),
-                    Text('${movie.genre} · ${movie.year}'),
+                    Text(
+                      '${movie.genre} · ${movie.year}',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                     const SizedBox(height: 4),
                     RatingStars(rating: movie.rating, size: 16),
                   ],
@@ -57,7 +65,7 @@ class MovieCard extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       child: ListTile(
         leading: Text(movie.posterEmoji, style: const TextStyle(fontSize: 28)),
-        title: Text(movie.title),
+        title: Text(movie.title, maxLines: 1, overflow: TextOverflow.ellipsis),
         subtitle: Text('${movie.genre} · ${movie.year}'),
         trailing: RatingStars(rating: movie.rating),
         onTap: onTap,

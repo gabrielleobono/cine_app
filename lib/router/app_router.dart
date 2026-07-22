@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import '../data/movie_repository.dart';
+import 'package:provider/provider.dart';
+import '../providers/movie_provider.dart';
 import '../screens/home_screen.dart';
 import '../screens/movie_detail_screen.dart';
 import '../screens/add_review_screen.dart';
@@ -19,7 +20,7 @@ final GoRouter appRouter = GoRouter(
       name: 'movieDetail',
       builder: (context, state) {
         final id = state.pathParameters['id']!;
-        final movie = MovieRepository.instance.getById(id);
+        final movie = context.read<MovieProvider>().getById(id);
 
         if (movie == null) {
           return const Scaffold(body: Center(child: Text('Film introuvable')));
@@ -32,7 +33,7 @@ final GoRouter appRouter = GoRouter(
       name: 'addReview',
       builder: (context, state) {
         final id = state.pathParameters['id']!;
-        final movie = MovieRepository.instance.getById(id);
+        final movie = context.read<MovieProvider>().getById(id);
 
         if (movie == null) {
           return const Scaffold(body: Center(child: Text('Film introuvable')));
@@ -40,7 +41,6 @@ final GoRouter appRouter = GoRouter(
         return AddReviewScreen(movieId: movie.id, movieTitle: movie.title);
       },
     ),
-
     GoRoute(
       path: '/settings',
       name: 'settings',

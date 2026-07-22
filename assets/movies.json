@@ -1,0 +1,62 @@
+[
+  {
+    "id": "m1",
+    "title": "Blade Runner",
+    "genre": "Science-Fiction",
+    "year": 1982,
+    "rating": 4.5,
+    "durationMinutes": 132,
+    "director": "Ridley Scott",
+    "synopsis": "Dans un futur dystopique, un détective traque des androïdes rebelles dans les rues de Los Angeles.",
+    "posterEmoji": "🤖",
+    "colorValue": 4281944507
+  },
+  {
+    "id": "m2",
+    "title": "Le Sentier de Cuivre",
+    "genre": "Drame",
+    "year": 2022,
+    "rating": 4.8,
+    "durationMinutes": 118,
+    "director": "Jean-Paul Mbarga",
+    "synopsis": "Une jeune ingénieure se bat pour moderniser l'exploitation minière familiale.",
+    "posterEmoji": "🎭",
+    "colorValue": 4285353025
+  },
+  {
+    "id": "m3",
+    "title": "Rire Sous la Pluie",
+    "genre": "Comédie",
+    "year": 2023,
+    "rating": 4.1,
+    "durationMinutes": 97,
+    "director": "Sophie Etoa",
+    "synopsis": "Deux colocataires organisent le plus grand mariage de la ville en une semaine.",
+    "posterEmoji": "🎬",
+    "colorValue": 4294551589
+  },
+  {
+    "id": "m4",
+    "title": "2001: L'Odyssée de l'espace",
+    "genre": "Science-Fiction",
+    "year": 1968,
+    "rating": 3.9,
+    "durationMinutes": 104,
+    "director": "Stanley Kubrick",
+    "synopsis": "Un voyage interstellaire qui explore l'évolution humaine et la rencontre avec une intelligence extraterrestre.",
+    "posterEmoji": "🪐",
+    "colorValue": 4283249710
+  },
+  {
+    "id": "m5",
+    "title": "Dune ",
+    "genre": "Science-Fiction",
+    "year": 2021,
+    "rating": 4.6,
+    "durationMinutes": 121,
+    "director": "Denis Villeneuve",
+    "synopsis": "Dans un futur lointain, un jeune héritier lutte pour protéger sa planète et son peuple contre des forces interstellaires.",
+    "posterEmoji": "🏜️",
+    "colorValue": 4291143720
+  }
+]
