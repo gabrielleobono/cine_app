@@ -6,7 +6,7 @@ class MovieRepository {
   static final MovieRepository instance = MovieRepository._();
 
   final List<Movie> _movies = [
-    Movie(
+    const Movie(
       id: 'm1',
       title: 'Blade Runner',
       genre: 'Science-Fiction',
@@ -16,10 +16,10 @@ class MovieRepository {
       director: 'Ridley Scott',
       synopsis:
           "Dans un futur dystopique, un détective traque des androïdes rebelles dans les rues de Los Angeles.",
-      posterEmoji: '',
+      posterEmoji: '🤖',
       colorValue: 0xFF3949AB,
     ),
-    Movie(
+    const Movie(
       id: 'm2',
       title: 'Le Sentier de Cuivre',
       genre: 'Drame',
@@ -32,7 +32,7 @@ class MovieRepository {
       posterEmoji: '🎭',
       colorValue: 0xFF6D4C41,
     ),
-    Movie(
+    const Movie(
       id: 'm3',
       title: 'Rire Sous la Pluie',
       genre: 'Comédie',
@@ -45,7 +45,7 @@ class MovieRepository {
       posterEmoji: '🎬',
       colorValue: 0xFFF9A825,
     ),
-    Movie(
+    const Movie(
       id: 'm4',
       title: '2001: L\'Odyssée de l\'espace',
       genre: 'Science-Fiction',
@@ -55,10 +55,10 @@ class MovieRepository {
       director: 'Stanley Kubrick',
       synopsis:
           "Un voyage interstellaire qui explore l'évolution humaine et la rencontre avec une intelligence extraterrestre.",
-      posterEmoji: '',
+      posterEmoji: '🪐',
       colorValue: 0xFF4E342E,
     ),
-    Movie(
+    const Movie(
       id: 'm5',
       title: 'Dune ',
       genre: 'Science-Fiction',
@@ -68,7 +68,7 @@ class MovieRepository {
       director: 'Denis Villeneuve',
       synopsis:
           "Dans un futur lointain, un jeune héritier lutte pour protéger sa planète et son peuple contre des forces interstellaires.",
-      posterEmoji: '',
+      posterEmoji: '🏜️',
       colorValue: 0xFFC62828,
     ),
   ];

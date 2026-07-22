@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import '../data/movie_repository.dart';
-import '../models/movie.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 import '../widgets/movie_card.dart';
 import '../widgets/genre_filter_bar.dart';
+import '../providers/movie_provider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -13,9 +13,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  String _query = '';
-  String _selectedGenre = 'Tous';
-
   // Calcule dynamiquement le nombre de colonnes selon la largeur disponible
   int _getCrossAxisCount(double width) {
     if (width > 1200) return 5; // Grands écrans / PC de bureau
@@ -26,21 +23,16 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final repo = MovieRepository.instance;
-    final List<Movie> results = repo.search(
-      query: _query,
-      genre: _selectedGenre,
-    );
-    final genres = ['Tous', ...repo.genres];
+    final movieProvider = context.watch<MovieProvider>();
+    final results = movieProvider.results;
+    final genres = movieProvider.genres;
 
-    // Récupération de la taille de l'écran pour adapter l'interface
     final mediaQuery = MediaQuery.of(context);
     final screenWidth = mediaQuery.size.width;
     final isMobilePortrait = screenWidth <= 480;
 
     return Scaffold(
       body: SafeArea(
-        // Empêche les barres système de masquer le contenu (ex: encoche iPhone)
         top: false,
         child: CustomScrollView(
           slivers: [
@@ -58,21 +50,19 @@ class _HomeScreenState extends State<HomeScreen> {
             SliverToBoxAdapter(
               child: GenreFilterBar(
                 genres: genres,
-                selectedGenre: _selectedGenre,
-                onQueryChanged: (value) => setState(() => _query = value),
-                onGenreSelected: (g) => setState(() => _selectedGenre = g),
+                selectedGenre: movieProvider.selectedGenre,
+                onQueryChanged: movieProvider.updateQuery,
+                onGenreSelected: movieProvider.updateGenre,
               ),
             ),
             const SliverToBoxAdapter(child: SizedBox(height: 8)),
 
             if (results.isEmpty)
               const SliverFillRemaining(
-                hasScrollBody:
-                    false, // Évite les bugs de défilement sur contenu vide
+                hasScrollBody: false,
                 child: Center(child: Text('Aucun film trouvé.')),
               )
             else if (isMobilePortrait)
-              // Mode Liste verticale : Uniquement pour les petits téléphones en portrait
               SliverList(
                 delegate: SliverChildBuilderDelegate((context, index) {
                   final movie = results[index];
@@ -87,7 +77,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 }, childCount: results.length),
               )
             else
-              // Mode Grille adaptative : Pour les téléphones en paysage, tablettes et PC
               SliverPadding(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 12,
@@ -98,7 +87,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     crossAxisCount: _getCrossAxisCount(screenWidth),
                     mainAxisSpacing: 12,
                     crossAxisSpacing: 12,
-                    // Ratio dynamique pour éviter que les images s'étirent de façon disproportionnée
                     childAspectRatio: screenWidth > 900 ? 0.7 : 0.75,
                   ),
                   delegate: SliverChildBuilderDelegate((context, index) {
