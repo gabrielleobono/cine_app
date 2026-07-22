@@ -1,9 +1,26 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:flutter/services.dart';
 import 'package:cine_app/data/movie_repository.dart';
 
 void main() {
+  // Obligatoire pour initialiser les liaisons de test Flutter
+  TestWidgetsFlutterBinding.ensureInitialized();
+
   group('MovieRepository.search', () {
     final repo = MovieRepository.instance;
+
+    setUpAll(() async {
+      // Mock du canal d'assets pour renvoyer un faux JSON pendant le test unitaire
+      TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+          .setMockMethodCallHandler(const MethodChannel('flutter/assets'), (
+            MethodCall methodCall,
+          ) async {
+            return '[{"id":"m1","title":"Blade Runner","genre":"Science-Fiction","year":1982,"rating":4.5,"durationMinutes":132,"director":"Ridley Scott","synopsis":"Futur.","posterEmoji":"🤖","colorValue":4281944507},{"id":"m5","title":"Dune","genre":"Science-Fiction","year":2021,"rating":4.6,"durationMinutes":121,"director":"Denis V.","synopsis":"Sable.","posterEmoji":"🏜️","colorValue":4291143720}]';
+          });
+
+      // Initialise le dépôt avec le mock ci-dessus
+      await repo.init();
+    });
 
     test('renvoie tous les films quand query et genre sont vides', () {
       final results = repo.search();
